@@ -14,7 +14,145 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          description: string | null
+          emoji: string
+          id: string
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          description?: string | null
+          emoji: string
+          id: string
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          description?: string | null
+          emoji?: string
+          id?: string
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          author_nickname: string
+          author_token: string
+          content: string
+          created_at: string
+          id: string
+          post_id: string
+        }
+        Insert: {
+          author_nickname: string
+          author_token: string
+          content: string
+          created_at?: string
+          id?: string
+          post_id: string
+        }
+        Update: {
+          author_nickname?: string
+          author_token?: string
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          author_nickname: string
+          author_token: string
+          category_id: string
+          content: string
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          author_nickname: string
+          author_token: string
+          category_id: string
+          content: string
+          created_at?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          author_nickname?: string
+          author_token?: string
+          category_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reactions: {
+        Row: {
+          author_token: string
+          comment_id: string | null
+          created_at: string
+          emoji: string
+          id: string
+          post_id: string | null
+        }
+        Insert: {
+          author_token: string
+          comment_id?: string | null
+          created_at?: string
+          emoji: string
+          id?: string
+          post_id?: string | null
+        }
+        Update: {
+          author_token?: string
+          comment_id?: string | null
+          created_at?: string
+          emoji?: string
+          id?: string
+          post_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reactions_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reactions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
