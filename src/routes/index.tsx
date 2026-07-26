@@ -9,10 +9,14 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Chismes — Foros anónimos de infidelidad" },
+      { name: "keywords", content: "chismes, anónimo, infidelidad, traición, drama, oficina, karma" },
       { name: "description", content: "El feed de chismes anónimos. Elige una categoría o suelta el tuyo." },
       { property: "og:title", content: "Chismes — Foros anónimos" },
       { property: "og:description", content: "Historias reales, anónimas, con drama del bueno." },
     ],
+    links: [
+      { rel: "icon", type: "image/png", href: "/cotillear.png",},
+    ],    
   }),
   component: Home,
 });
