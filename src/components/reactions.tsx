@@ -34,9 +34,12 @@ export function Reactions({ target }: { target: Target }) {
         const { error } = await supabase.from("reactions").delete().eq("id", existing.id);
         if (error) throw error;
       } else {
-        const payload = "postId" in target
-          ? { post_id: target.postId, emoji, author_token: token }
-          : { comment_id: target.commentId, emoji, author_token: token };
+        const payload = {
+          post_id: "postId" in target ? target.postId : null,
+          comment_id: "commentId" in target ? target.commentId : null,
+          emoji,
+          author_token: token,
+        };
         const { error } = await supabase.from("reactions").insert(payload);
         if (error) throw error;
       }
